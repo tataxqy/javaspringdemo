@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 可以扫描controller、service、... 这里让扫描controller，指定controller的包 -->
+	<context:component-scan base-package="com.product.controller"></context:component-scan>
+
+	<!-- 视图解析器 解析jsp解析，默认使用jstl标签，classpath下的得有jstl的包 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 配置jsp路径的前缀 -->
+		<property name="prefix" value="/jsp/" />
+		<!-- 配置jsp路径的后缀 -->
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+   <mvc:default-servlet-handler/>
+
+	<mvc:annotation-driven/>
+	
+	<!-- 访问静态资源 
+    <mvc:resources location="/js" mapping="/**"/>
+    <mvc:resources location="/file" mapping="/**"/>
+-->
+   	<mvc:cors>
+       <mvc:mapping path="/**"/>
+    </mvc:cors>
+
+    
+<!-- 多部分文件上传 -->
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+     <property name="maxUploadSize" value="100000000" />
+     <property name="maxInMemorySize" value="20971520" />
+     <property name="defaultEncoding" value="UTF-8"></property>
+</bean>
+	
+	<!--拦截器-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.product.interceptor.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors> 
+	
+	
+</beans>

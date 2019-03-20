@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.product.mapper.HelpCustomMapper" >
+ <resultMap id="BaseResultMap" type="com.product.po.Help" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="pay" property="pay" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+     <result column="user_name" property="user_name" jdbcType="VARCHAR" />
+     <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="findPage" parameterType="com.product.vo.HelpVo" resultMap="BaseResultMap">
+      select help.*,user.user_name as user_name,user.wechat as wechat from help,user
+      <where >
+            and help.userId=user.user_id
+           <if test="help.userId != null" >
+               and help.userId = #{help.userId,jdbcType=INTEGER}
+            </if>
+              <if test="help.type != null" >
+               and help.type = #{help.type,jdbcType=INTEGER}
+            </if> 
+           
+      </where>
+      order by createTime DESC limit #{pageIndex},#{pageSize}
+  </select>
+  
+  <select id="findPageCount" parameterType="com.product.vo.HelpVo" resultType="java.lang.Integer">
+      select count(*) from help 
+      <where >
+           <if test="help.userId != null" >
+               and help.userId = #{help.userId,jdbcType=INTEGER}
+            </if>
+              <if test="help.type != null" >
+               and help.type = #{help.type,jdbcType=INTEGER}
+            </if> 
+      </where>
+  </select>
+  
+  
+   <select id="findPageByOrder" parameterType="com.product.vo.HelpVo" resultMap="BaseResultMap">
+      select help.*,user.user_name as user_name,user.wechat as wechat from help,user,orderinfo
+      <where >
+            and help.userId=user.user_id and orderinfo.helpId=help.id
+           <if test="help.userId != null" >
+               and orderinfo.userId = #{help.userId,jdbcType=INTEGER}
+            </if>
+           
+      </where>
+      order by createTime DESC limit #{pageIndex},#{pageSize}
+  </select>
+  
+  <select id="findPageCountByOrder" parameterType="com.product.vo.HelpVo" resultType="java.lang.Integer">
+      select count(*) from help,user,orderinfo 
+      <where >
+            and help.userId=user.user_id and orderinfo.helpId=help.id
+           <if test="help.userId != null" >
+               and orderinfo.userId = #{help.userId,jdbcType=INTEGER}
+            </if>
+           
+      </where>
+  </select>
+</mapper>

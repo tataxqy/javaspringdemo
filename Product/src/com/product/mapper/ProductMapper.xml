@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.product.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.product.po.Product" >
+    <id column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="qoh" property="qoh" jdbcType="INTEGER" />
+    <result column="qoh_threshold" property="qoh_threshold" jdbcType="INTEGER" />
+    <result column="original_price" property="original_price" jdbcType="REAL" />
+    <result column="discnt_rate" property="discnt_rate" jdbcType="REAL" />
+    <result column="sid" property="sid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pid, pname, qoh, qoh_threshold, original_price, discnt_rate, sid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.product.po.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.product.po.ProductExample" >
+    delete from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.product.po.Product" >
+    insert into product (pid, pname, qoh, 
+      qoh_threshold, original_price, discnt_rate, 
+      sid)
+    values (#{pid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, #{qoh,jdbcType=INTEGER}, 
+      #{qoh_threshold,jdbcType=INTEGER}, #{original_price,jdbcType=REAL}, #{discnt_rate,jdbcType=REAL}, 
+      #{sid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.product.po.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="qoh != null" >
+        qoh,
+      </if>
+      <if test="qoh_threshold != null" >
+        qoh_threshold,
+      </if>
+      <if test="original_price != null" >
+        original_price,
+      </if>
+      <if test="discnt_rate != null" >
+        discnt_rate,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="qoh != null" >
+        #{qoh,jdbcType=INTEGER},
+      </if>
+      <if test="qoh_threshold != null" >
+        #{qoh_threshold,jdbcType=INTEGER},
+      </if>
+      <if test="original_price != null" >
+        #{original_price,jdbcType=REAL},
+      </if>
+      <if test="discnt_rate != null" >
+        #{discnt_rate,jdbcType=REAL},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.product.po.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product
+    <set >
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pname != null" >
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qoh != null" >
+        qoh = #{record.qoh,jdbcType=INTEGER},
+      </if>
+      <if test="record.qoh_threshold != null" >
+        qoh_threshold = #{record.qoh_threshold,jdbcType=INTEGER},
+      </if>
+      <if test="record.original_price != null" >
+        original_price = #{record.original_price,jdbcType=REAL},
+      </if>
+      <if test="record.discnt_rate != null" >
+        discnt_rate = #{record.discnt_rate,jdbcType=REAL},
+      </if>
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product
+    set pid = #{record.pid,jdbcType=VARCHAR},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      qoh = #{record.qoh,jdbcType=INTEGER},
+      qoh_threshold = #{record.qoh_threshold,jdbcType=INTEGER},
+      original_price = #{record.original_price,jdbcType=REAL},
+      discnt_rate = #{record.discnt_rate,jdbcType=REAL},
+      sid = #{record.sid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.product.po.Product" >
+    update product
+    <set >
+      <if test="pname != null" >
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="qoh != null" >
+        qoh = #{qoh,jdbcType=INTEGER},
+      </if>
+      <if test="qoh_threshold != null" >
+        qoh_threshold = #{qoh_threshold,jdbcType=INTEGER},
+      </if>
+      <if test="original_price != null" >
+        original_price = #{original_price,jdbcType=REAL},
+      </if>
+      <if test="discnt_rate != null" >
+        discnt_rate = #{discnt_rate,jdbcType=REAL},
+      </if>
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.product.po.Product" >
+    update product
+    set pname = #{pname,jdbcType=VARCHAR},
+      qoh = #{qoh,jdbcType=INTEGER},
+      qoh_threshold = #{qoh_threshold,jdbcType=INTEGER},
+      original_price = #{original_price,jdbcType=REAL},
+      discnt_rate = #{discnt_rate,jdbcType=REAL},
+      sid = #{sid,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

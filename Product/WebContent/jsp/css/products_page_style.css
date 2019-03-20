@@ -1,0 +1,261 @@
+/* --------------------------------
+
+Primary style
+
+-------------------------------- */
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    font-family: "Lato", sans-serif;
+    color: #24221F;
+    background-color: #ffffff;
+}
+
+a {
+    color: #5D7C89;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+/* --------------------------------
+
+Main Components
+
+-------------------------------- */
+.products-preview {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.products-builder {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+.products-builder > ul {
+    height: 100%;
+    overflow: hidden;
+}
+.products-builder .build {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 5%;
+    position: relative;
+    z-index: 2;
+    visibility: visible;
+    -webkit-transition: visibility .7s;
+    transition: visibility .7s;
+}
+
+
+/* --------------------------------
+
+Step content - basic style
+
+-------------------------------- */
+.products-content {
+    padding: 1.8em 0 3em;
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-animation: cd-right-to-center .5s .2s backwards;
+    animation: cd-right-to-center .5s .2s backwards;
+}
+.products-content header {
+    position: relative;
+    margin-bottom: 1em;
+}
+.products-content h1 {
+    font-size: 2.4rem;
+}
+.products-content .products-list > li {
+    /* basic style for list of options */
+    border: 2px solid #27A9E3;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    -webkit-transition: border-color .3s;
+    transition: border-color .3s;
+}
+
+@media only screen and (min-width: 768px) {
+    .products-content header {
+        margin-bottom: 2em;
+    }
+    .products-content h1 {
+        font-size: 4rem;
+    }
+    .products-content .products-list > li {
+        margin-bottom: 2%;
+        width: 48%;
+        float: left;
+        margin-right: 4%;
+    }
+    .products-content .products-list > li:nth-of-type(2n) {
+        margin-right: 0;
+    }
+}
+@media only screen and (min-width: 1024px) {
+    .products-content {
+        /* this padding takes care of both top and bottom fixed navigations */
+        padding: 220px 0 140px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .products-content header {
+        display: none;
+    }
+}
+@media only screen and (min-width: 1024px) and (min-height: 850px) {
+    .products-content {
+        max-width: 1200px;
+    }
+}
+@media only screen and (min-width: 1480px) and (min-height: 850px) {
+    .products-content {
+        padding: 150px 0 140px;
+    }
+}
+
+@-webkit-keyframes cd-right-to-center {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(30px);
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes cd-right-to-center {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(30px);
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+
+/* --------------------------------
+
+Products  - style
+
+-------------------------------- */
+.products-builder .products-list {
+    text-align: center;
+}
+.products-builder .products-list > li {
+    padding: 2.7em 0;
+}
+.products-builder .products-list .name {
+    display: block;
+    font-size: 3.2rem;
+    font-weight: bold;
+    margin-top: .2em;
+    margin-bottom: 1em;
+}
+.products-builder .products-list .message{
+    display: block;
+    font-size: 2.0rem;
+    margin-bottom: 1.5em;
+}
+.products-builder .products-list img {
+    display: block;
+    max-width: 80%;
+    margin: 1.8em auto 2.2em;
+}
+.products-builder .products-list .price {
+    display: block;
+    color: #27A9E3;
+    font-size: 2.0rem;
+    margin-bottom: 1.5em;
+}
+
+
+/* --------------------------------
+
+Builder top navigation
+
+-------------------------------- */
+.products-preview .main-header {
+    display: none;
+}
+@media only screen and (min-width: 1024px) {
+    .products-preview .main-header {
+        display: block;
+        position: fixed;
+        z-index: 3;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 5%;
+        text-align: center;
+        background: #ffffff;
+    }
+    .products-preview .main-header::after {
+        /* this is to create the linear gradient below the header */
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background-image: -webkit-linear-gradient(top, white, rgba(255, 255, 255, 0));
+        background-image: linear-gradient(to bottom, white, rgba(255, 255, 255, 0));
+    }
+    .products-preview .main-header h1 {
+        font-size: 3.8rem;
+        margin: 1.1em auto .76em;
+        font-weight: bold;
+    }
+}
+@media only screen and (min-width: 1480px) and (min-height: 850px) {
+    .products-preview .main-header h1 {
+        font-size: 4.5rem;
+    }
+}
+
+input[type=submit],
+input[type=button]{
+    display: inline-block;
+    vertical-align: middle;
+    padding: 12px 24px;
+    margin: 0px;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #27A9E3;
+    border-radius: 3px;
+    border: none;
+    -webkit-appearance: none;
+    outline:none;
+    width:80%;
+}
